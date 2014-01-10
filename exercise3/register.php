@@ -2,11 +2,11 @@
 <head><title>Registration</title></head>
 <body>
 
-<?php 
+<?php
 $success = false;
 // Registration attempt
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-	require("db.php");
+	require("../db.php");
 	$user = mysql_real_escape_string($_POST["username"]);
 	$query = "SELECT COUNT(*) FROM users WHERE USERNAME='$user'";
 	$result = mysql_query($query, $db);
@@ -15,19 +15,19 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 		echo "The user already exists!<br />";
 	}
 	else {
-		$pass = sha1(mysql_real_escape_string($_POST["password"]));
+		$pass = mysql_real_escape_string($_POST["password"]);
 		$phone = mysql_real_escape_string($_POST["phone"]);
 		$query = "INSERT INTO users VALUES ('$user', '$pass', '$phone')";
 		mysql_query($query, $db) or die(mysql_error());
-		echo "Registration for $user was successful <br /><br />";	
+		echo "Registration for $user was successful <br /><br />";
 		$success = true;
 	}
-	
+
 ?>
 	<a href="login.php">Click here to login</a>
-	
-<?php 
-} 
+
+<?php
+}
 if (!$success) {
 ?>
 	<h1>Registration</h1><br />

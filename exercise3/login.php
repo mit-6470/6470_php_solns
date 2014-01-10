@@ -7,9 +7,9 @@ $success = false;
 
 // check if login attempt
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-	require("db.php");	// establish DB connection
+	require("../db.php");	// establish DB connection
 	$user = $_POST["username"];
-	$pass = sha1($_POST["password"]);
+	$pass = $_POST["password"];
 	$query = "SELECT PASSWORD from users WHERE USERNAME='" . mysql_real_escape_string($user) . "'";
 	$result = mysql_query($query, $db) or die(mysql_error());
 	$row = mysql_fetch_assoc($result);

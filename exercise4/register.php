@@ -3,6 +3,15 @@
 <body>
 
 <?php
+session_start();
+require("login_info.php");
+
+// check if already logged in
+if (is_logged_in()) {
+	header("Location: index.php"); // Redirect if already logged in
+	exit(0);
+}
+
 $success = false;
 // Registration attempt
 if (isset($_POST["username"]) && isset($_POST["password"])) {

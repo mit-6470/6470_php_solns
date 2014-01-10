@@ -21,7 +21,10 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	$result = mysql_query($query, $db) or die(mysql_error());
 	$row = mysql_fetch_assoc($result);
 	if ($pass == $row["PASSWORD"]) {
-		$_SESSION['user'] = mysql_real_escape_string($user);
+		$_SESSION["user"] = mysql_real_escape_string($user);
+		if (isset($_POST["remember"])) {
+			setcookie("user", mysql_real_escape_string($user), time() + 60*60*24, "/");
+		}
 		header("Location: index.php");
 	} else {
 		echo "Invalid username or password <br />";
@@ -33,6 +36,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
 	Username: <input type="text" name="username" /><br />
 	Password: <input type="password" name="password" /><br />
+	Remember me <input type="checkbox" name="remember" /><br />
 	<input type="submit" />
 </form>
 <br />

@@ -7,18 +7,18 @@ $success = false;
 // Registration attempt
 if (isset($_POST["username"]) && isset($_POST["password"])) {
 	require("../db.php");
-	$user = mysql_real_escape_string($_POST["username"]);
+	$user = mysqli_real_escape_string($db,$_POST["username"]);
 	$query = "SELECT COUNT(*) FROM users WHERE USERNAME='$user'";
-	$result = mysql_query($query, $db);
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($db,$query);
+	$row = mysqli_fetch_array($result);
 	if ($row["COUNT(*)"] != 0) {
 		echo "The user already exists!<br />";
 	}
 	else {
-		$pass = mysql_real_escape_string($_POST["password"]);
-		$phone = mysql_real_escape_string($_POST["phone"]);
+		$pass = mysqli_real_escape_string($db,$_POST["password"]);
+		$phone = mysqli_real_escape_string($db,$_POST["phone"]);
 		$query = "INSERT INTO users VALUES ('$user', '$pass', '$phone')";
-		mysql_query($query, $db) or die(mysql_error());
+		mysqli_query( $db,$query) or die(mysqli_error($db));
 		echo "Registration for $user was successful <br /><br />";
 		$success = true;
 	}
